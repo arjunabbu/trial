@@ -5,9 +5,8 @@ phases:
     commands:
       - echo Logging in to ECR...
       - AWS_AUTH=$(aws ecr get-login-password --region $AWS_DEFAULT_REGION)
-      - echo $AWS_AUTH | docker login --username AWS --password-stdin $ECR_REPO_URI
       - echo Installing dependencies...
-      - npm install
+      
 
   build:
     commands:
