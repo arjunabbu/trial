@@ -2,23 +2,26 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions: { nodejs: 16 }
     commands:
-      - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPOSITORY_URI
+      - echo Logging in to ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_ REGION | docker login --username AWS --password-stdin $ECR_REPO_URI
+      - echo Installing dependencies...
+      - npm install
 
-      # Replace with this:
-      - aws ecr get-authorization-token --region $AWS_DEFAULT_REGION --registry-ids $ECR_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION | docker login --username AWS --password-stdin -
-
-post_build:
+  build:
     commands:
-      - echo Pushing Docker image to ECR...
-      - docker push $ECR_REPOSITORY_URI:$CODEBUILD_BUILD_ID
+      - echo Building the Docker image...
+      - docker build -t $ECR_REPO_URI:latest .
+      - echo Tagging the image for deployment...
+      - docker tag $ECR_REPO_URI:latest $ECR_REPO_URI:$CODEBUILD_BUILD_ID
+
+  post_build:
+    commands:
+      - echo Pushing the Docker image to ECR...
+      - docker push $ECR_REPO_URI:$CODEBUILD_BUILD_ID
 
 artifacts:
   paths:
-    - Dockerfile
     - buildspec.yml
-    - index.js
-    - package*.json
+
 
