@@ -6,10 +6,11 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPOSITORY_URI
-      - echo Building Docker image...
-      - docker build -t $ECR_REPOSITORY_URI:$CODEBUILD_BUILD_ID .
 
-  post_build:
+      # Replace with this:
+      - aws ecr get-authorization-token --region $AWS_DEFAULT_REGION --registry-ids $ECR_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION | docker login --username AWS --password-stdin -
+
+post_build:
     commands:
       - echo Pushing Docker image to ECR...
       - docker push $ECR_REPOSITORY_URI:$CODEBUILD_BUILD_ID
@@ -20,3 +21,4 @@ artifacts:
     - buildspec.yml
     - index.js
     - package*.json
+
