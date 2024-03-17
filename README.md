@@ -1,4 +1,6 @@
 Node.js Hello World Application Deployment on AWS ECS Fargate
+
+
 This repository contains the necessary steps and files to deploy a simple Node.js "Hello World" application to an AWS ECS Fargate cluster using a CI/CD pipeline. Below are the steps to set up and deploy the application:
 
 Preparation
@@ -30,6 +32,6 @@ Specify the build spec file path as buildspec.yml in the root of your repository
 Environment Variables
 Define two environment variables:
 AWS_DEFAULT_REGION: Set the value to ap-south-1 (Mumbai region).
-ECR_REPO_URI: This will be dynamically populated during pipeline execution .
+ECR_REPO_URI: This will be dynamically populated during pipeline execution (explained later).
 Build Spec Configuration
 Create a buildspec.yml file in your project root with the provided content.
