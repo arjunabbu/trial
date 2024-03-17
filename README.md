@@ -7,7 +7,7 @@ Preparation_
 
 GitHub Repository Setup
 
-Create a new public or private repository on GitHub.
+Create a repository on GitHub.
 
 Initialize a README.md file explaining the project and CI/CD setup.
 
